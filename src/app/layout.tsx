@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
+import { ThemeProvider } from "~/components/providers/theme";
 
 import { cn } from "~/lib/utils";
 
@@ -12,8 +13,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
-    <html lang="en">
-      <body className={cn("antialiased")}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn("antialiased")}>
+        <ThemeProvider enableSystem defaultTheme="light" attribute="class">
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
