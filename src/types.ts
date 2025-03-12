@@ -14,6 +14,10 @@ export type ProductType = {
   updatedAt: Date;
 };
 
+export type CartType = {
+  items: (ProductType & { quantity: number })[];
+};
+
 export type MetaType = {
   total: number;
   pages: number;

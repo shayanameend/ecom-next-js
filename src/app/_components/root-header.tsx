@@ -9,9 +9,11 @@ import {
 } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useStore } from "@nanostores/react";
 import { MenuIcon, ShoppingCartIcon } from "lucide-react";
 
 import { assets } from "~/assets";
+import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import {
@@ -30,6 +32,7 @@ import {
 } from "~/components/ui/sheet";
 import { routes } from "~/lib/routes";
 import { cn } from "~/lib/utils";
+import { $cart } from "~/stores/cart";
 
 const navLinks = [
   {
@@ -59,6 +62,8 @@ export function RootHeader() {
   const pathname = usePathname();
   const params = useParams();
   const router = useRouter();
+
+  const cart = useStore($cart);
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -100,7 +105,12 @@ export function RootHeader() {
       <div className={cn("flex flex-row items-center gap-4")}>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" className={cn("relative")}>
+              {cart.items.length > 0 && (
+                <Badge className={cn("absolute -top-1.5 -right-1.5 size-5")}>
+                  {cart.items.length}
+                </Badge>
+              )}
               <ShoppingCartIcon />
             </Button>
           </PopoverTrigger>

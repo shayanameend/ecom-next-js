@@ -1,10 +1,8 @@
 import type { InfoType, MetaType, ProductType } from "~/types";
 
-import Image from "next/image";
-
 import axios from "axios";
 
-import { Card, CardContent, CardFooter } from "~/components/ui/card";
+import { Product } from "~/app/_components/product";
 import { routes } from "~/lib/routes";
 import { cn } from "~/lib/utils";
 
@@ -50,22 +48,7 @@ export default async function MarketplacePage() {
         >
           {response.data.products.map((product) => (
             <li key={product.id}>
-              <Card className={cn("p-0 gap-0")}>
-                <CardContent className={cn("p-0")}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_FILE_URL}/${product.pictureIds[0]}`}
-                    alt={product.name}
-                    width={180}
-                    height={180}
-                    sizes="(max-width: 640px) 120px, (max-width: 1024px) 150px, 180px"
-                    className={cn("h-48 w-full object-cover rounded-t-xl")}
-                  />
-                </CardContent>
-                <CardFooter className={cn("p-4")}>
-                  <h3 className={cn("")}>{product.name}</h3>
-                  <p className={cn("")}>{product.price}</p>
-                </CardFooter>
-              </Card>
+              <Product product={product} />
             </li>
           ))}
         </ul>
