@@ -1,12 +1,100 @@
 import type { InfoType, MetaType, ProductType } from "~/types";
 
 import axios from "axios";
+import * as zod from "zod";
 
 import { Product } from "~/app/_components/product";
 import { routes } from "~/lib/routes";
 import { cn } from "~/lib/utils";
 
-export default async function MarketplacePage() {
+const searchParamsSchema = zod.object({
+  page: zod.coerce
+    .number({
+      message: "Page must be a number!",
+    })
+    .int({
+      message: "Page must be an integer!",
+    })
+    .min(1, {
+      message: "Page must be a positive number!",
+    })
+    .default(1),
+  limit: zod.coerce
+    .number({
+      message: "Limit must be a number!",
+    })
+    .int({
+      message: "Limit must be an integer!",
+    })
+    .min(1, {
+      message: "Limit must be a positive number!",
+    })
+    .default(10),
+  sort: zod
+    .enum(["RELEVANCE", "LATEST", "OLDEST"], {
+      message: "Sort must be one of 'RELEVANCE', 'LATEST', 'OLDEST'!",
+    })
+    .optional(),
+  name: zod
+    .string({
+      message: "Name must be a string!",
+    })
+    .min(1, {
+      message: "Name must be at least 1 characters long!",
+    })
+    .optional(),
+  minStock: zod.coerce
+    .number({
+      message: "Stock must be a number!",
+    })
+    .int({
+      message: "Stock must be an integer!",
+    })
+    .min(0, {
+      message: "Stock must be a non-negative number!",
+    })
+    .optional(),
+  minPrice: zod.coerce
+    .number({
+      message: "Min Price must be a number!",
+    })
+    .min(1, {
+      message: "Min Price must be a positive number!",
+    })
+    .optional(),
+  maxPrice: zod.coerce
+    .number({
+      message: "Max Price must be a number!",
+    })
+    .min(1, {
+      message: "Max Price must be a positive number!",
+    })
+    .optional(),
+  categoryId: zod
+    .string({
+      message: "Category ID must be a string!",
+    })
+    .length(24, {
+      message: "Category ID must be a 24-character string!",
+    })
+    .optional(),
+  vendorId: zod
+    .string({
+      message: "Vendor ID must be a string!",
+    })
+    .length(24, {
+      message: "Vendor ID must be a 24-character string!",
+    })
+    .optional(),
+});
+
+interface MarketplacePageProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+export default async function MarketplacePage({
+  searchParams,
+}: Readonly<MarketplacePageProps>) {
   let response: {
     data: {
       products: ProductType[];
@@ -16,7 +104,23 @@ export default async function MarketplacePage() {
   };
 
   try {
-    const { data } = await axios.get(routes.api.public.products.url());
+    const validatedParams = searchParamsSchema.safeParse(await searchParams);
+
+    const queryParams = new URLSearchParams();
+
+    if (validatedParams.success) {
+      for (const [key, value] of Object.entries(validatedParams.data)) {
+        if (value !== undefined) {
+          queryParams.append(key, String(value));
+        }
+      }
+    }
+
+    const queryString = queryParams.toString();
+
+    const apiUrl = `${routes.api.public.products.url()}${queryString ? `?${queryString}` : ""}`;
+
+    const { data } = await axios.get(apiUrl);
 
     response = data;
   } catch (error) {

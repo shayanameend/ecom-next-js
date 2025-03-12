@@ -118,7 +118,7 @@ export function RootHeader() {
                     if (event.key === "Enter") {
                       if (event.currentTarget.value) {
                         router.push(
-                          `${routes.app.public.marketplace.url()}/?q=${event.currentTarget.value}`,
+                          `${routes.app.public.marketplace.url()}/?name=${event.currentTarget.value}`,
                         );
                       } else {
                         router.push(routes.app.public.marketplace.url());
