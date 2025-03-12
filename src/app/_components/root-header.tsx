@@ -4,6 +4,7 @@ import { MenuIcon, ShoppingCartIcon } from "lucide-react";
 
 import { assets } from "~/assets";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -32,7 +33,6 @@ export function RootHeader() {
         priority
         src={assets.pictures.app.logo.src}
         alt={assets.pictures.app.logo.alt}
-        height={48}
         sizes="(max-width: 640px) 120px, (max-width: 1024px) 150px, 180px"
         className={cn("h-14 md:h-16 w-auto object-cover")}
       />
@@ -62,7 +62,9 @@ export function RootHeader() {
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
-              <SheetTitle />
+              <SheetTitle className={cn("pt-8")}>
+                <Input placeholder="Search for porducts..." />
+              </SheetTitle>
               <SheetDescription />
             </SheetHeader>
             <SheetFooter>
