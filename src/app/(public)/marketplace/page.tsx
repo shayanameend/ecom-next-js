@@ -104,12 +104,14 @@ export default async function MarketplacePage({
   };
 
   try {
-    const validatedParams = searchParamsSchema.safeParse(await searchParams);
+    const validatedSearchParams = searchParamsSchema.safeParse(
+      await searchParams,
+    );
 
     const queryParams = new URLSearchParams();
 
-    if (validatedParams.success) {
-      for (const [key, value] of Object.entries(validatedParams.data)) {
+    if (validatedSearchParams.success) {
+      for (const [key, value] of Object.entries(validatedSearchParams.data)) {
         if (value !== undefined) {
           queryParams.append(key, String(value));
         }

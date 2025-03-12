@@ -161,11 +161,11 @@ const app = {
       label: "Home",
     },
     marketplace: {
-      url: () => "/marketplace",
+      url: (id?: string) => (id ? `/marketplace/${id}` : "/marketplace"),
       label: "Marketplace",
     },
     vendors: {
-      url: () => "/vendors",
+      url: (id?: string) => (id ? `/vendors/${id}` : "/vendors"),
       label: "Vendors",
     },
     community: {

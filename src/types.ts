@@ -40,6 +40,10 @@ export type ProductType = {
   updatedAt: Date;
 };
 
+export type VendorDetailType = VendorType & {
+  products: ProductType[];
+};
+
 export enum CategoryStatus {
   PENDING = "PENDING",
   REJECTED = "REJECTED",
