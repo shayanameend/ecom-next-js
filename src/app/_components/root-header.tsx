@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { MenuIcon, ShoppingCartIcon } from "lucide-react";
 
@@ -23,6 +24,29 @@ import {
 import { cn } from "~/lib/utils";
 
 export function RootHeader() {
+  const navLinks = [
+    {
+      url: "/",
+      label: "Home",
+    },
+    {
+      url: "/marketplace",
+      label: "Marketplace",
+    },
+    {
+      url: "/vendors",
+      label: "Vendors",
+    },
+    {
+      url: "/community",
+      label: "Community",
+    },
+    {
+      url: "/contact",
+      label: "Contact",
+    },
+  ];
+
   return (
     <header
       className={cn(
@@ -47,36 +71,45 @@ export function RootHeader() {
             <h2>Cart</h2>
           </PopoverContent>
         </Popover>
-        <Button
-          variant="default"
-          size="lg"
-          className={cn("hidden md:inline-flex")}
-        >
-          Sign In
-        </Button>
+        <RootHeaderCTAButton className={cn("hidden md:inline-flex")} />
         <Sheet>
           <SheetTrigger asChild className={cn("md:hidden")}>
             <Button variant="outline" size="icon">
               <MenuIcon />
             </Button>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className={cn("w-full md:size-0")}>
             <SheetHeader>
               <SheetTitle className={cn("pt-8")}>
                 <Input placeholder="Search for porducts..." />
               </SheetTitle>
               <SheetDescription />
             </SheetHeader>
+            <nav className={cn("px-6")}>
+              <ul>
+                {navLinks.map(({ url, label }) => (
+                  <li key={url}>
+                    <Link href={url}>{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
             <SheetFooter>
               <SheetClose asChild>
-                <Button variant="default" size="lg">
-                  Sign In
-                </Button>
+                <RootHeaderCTAButton />
               </SheetClose>
             </SheetFooter>
           </SheetContent>
         </Sheet>
       </div>
     </header>
+  );
+}
+
+function RootHeaderCTAButton({ className }: { className?: string }) {
+  return (
+    <Button variant="default" size="lg" className={className}>
+      Sign In
+    </Button>
   );
 }
