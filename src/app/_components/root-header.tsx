@@ -5,6 +5,11 @@ import { MenuIcon, ShoppingCartIcon } from "lucide-react";
 import { assets } from "~/assets";
 import { Button } from "~/components/ui/button";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import {
   Sheet,
   SheetClose,
   SheetContent,
@@ -32,11 +37,25 @@ export function RootHeader() {
         className={cn("h-12 w-auto object-cover")}
       />
       <div className={cn("flex flex-row items-center gap-4")}>
-        <Button variant="outline" size="icon">
-          <ShoppingCartIcon />
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="icon">
+              <ShoppingCartIcon />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className={cn("mt-2 mr-4 w-48 md:w-72")}>
+            <h2>Cart</h2>
+          </PopoverContent>
+        </Popover>
+        <Button
+          variant="default"
+          size="lg"
+          className={cn("hidden md:inline-flex")}
+        >
+          Sign In
         </Button>
         <Sheet>
-          <SheetTrigger asChild>
+          <SheetTrigger asChild className={cn("md:hidden")}>
             <Button variant="outline" size="icon">
               <MenuIcon />
             </Button>
@@ -48,7 +67,9 @@ export function RootHeader() {
             </SheetHeader>
             <SheetFooter>
               <SheetClose asChild>
-                <Button />
+                <Button variant="default" size="lg">
+                  Sign In
+                </Button>
               </SheetClose>
             </SheetFooter>
           </SheetContent>
