@@ -70,7 +70,7 @@ export function RootHeader() {
         src={assets.pictures.app.logo.src}
         alt={assets.pictures.app.logo.alt}
         sizes="(max-width: 640px) 120px, (max-width: 1024px) 150px, 180px"
-        className={cn("h-14 md:h-18 w-auto object-cover")}
+        className={cn("mt-1 ml-1 h-14 md:h-18 w-auto object-cover")}
       />
       <nav>
         <ul className={cn("hidden md:flex gap-4")}>
