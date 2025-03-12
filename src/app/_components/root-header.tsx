@@ -1,7 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { MenuIcon, ShoppingCartIcon } from "lucide-react";
@@ -23,41 +28,44 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
+import { routes } from "~/lib/routes";
 import { cn } from "~/lib/utils";
 
 const navLinks = [
   {
-    url: "/",
-    label: "Home",
+    label: routes.app.public.root.label,
+    url: routes.app.public.root.url(),
   },
   {
-    url: "/marketplace",
-    label: "Marketplace",
+    label: routes.app.public.marketplace.label,
+    url: routes.app.public.marketplace.url(),
   },
   {
-    url: "/vendors",
-    label: "Vendors",
+    label: routes.app.public.vendors.label,
+    url: routes.app.public.vendors.url(),
   },
   {
-    url: "/community",
-    label: "Community",
+    label: routes.app.public.community.label,
+    url: routes.app.public.community.url(),
   },
   {
-    url: "/contact",
-    label: "Contact",
+    label: routes.app.public.contact.label,
+    url: routes.app.public.contact.url(),
   },
 ];
 
 export function RootHeader() {
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
+  const params = useParams();
+  const router = useRouter();
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <>
   useEffect(() => {
     setIsSheetOpen(false);
-  }, [pathname]);
+  }, [searchParams, pathname, params]);
 
   return (
     <header
@@ -110,7 +118,20 @@ export function RootHeader() {
           <SheetContent className={cn("w-full md:w-96")}>
             <SheetHeader>
               <SheetTitle className={cn("pt-8")}>
-                <Input placeholder="Search for porducts..." />
+                <Input
+                  placeholder="Search for porducts..."
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      if (event.currentTarget.value) {
+                        router.push(
+                          `${routes.app.public.marketplace.url()}/?q=${event.currentTarget.value}`,
+                        );
+                      } else {
+                        router.push(routes.app.public.marketplace.url());
+                      }
+                    }
+                  }}
+                />
               </SheetTitle>
               <SheetDescription />
             </SheetHeader>
