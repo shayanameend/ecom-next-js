@@ -63,8 +63,6 @@ export function RootHeader() {
   const params = useParams();
   const router = useRouter();
 
-  const cart = useStore($cart);
-
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <>
@@ -103,21 +101,7 @@ export function RootHeader() {
         </ul>
       </nav>
       <div className={cn("flex flex-row items-center gap-4")}>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" size="icon" className={cn("relative")}>
-              {cart.items.length > 0 && (
-                <Badge className={cn("absolute -top-1.5 -right-1.5 size-5")}>
-                  {cart.items.length}
-                </Badge>
-              )}
-              <ShoppingCartIcon />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className={cn("mt-2 mr-4 w-48 md:w-72")}>
-            <h2>Your Cart</h2>
-          </PopoverContent>
-        </Popover>
+        <Cart />
         <RootHeaderCTAButton className={cn("hidden md:inline-flex")} />
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger asChild className={cn("md:hidden")}>
@@ -178,5 +162,48 @@ function RootHeaderCTAButton({ className }: { className?: string }) {
     <Button variant="default" size="lg" className={className}>
       Sign In
     </Button>
+  );
+}
+
+function Cart() {
+  const cart = useStore($cart);
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" size="icon" className={cn("relative")}>
+          {cart.items.length > 0 && (
+            <Badge className={cn("absolute -top-1.5 -right-1.5 size-5")}>
+              {cart.items.length}
+            </Badge>
+          )}
+          <ShoppingCartIcon />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className={cn("space-y-4 mt-2 mr-4 w-72")}>
+        <h2>Your Cart</h2>
+        {cart.items.length > 0 && (
+          <ul className={cn("space-y-2")}>
+            {cart.items.map((item) => (
+              <li key={item.id}>
+                <div className={cn("flex flex-row items-center gap-2")}>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_FILE_URL}/${item.pictureIds[0]}`}
+                    alt={item.name}
+                    width={48}
+                    height={48}
+                    className={cn("size-12 object-cover rounded-md")}
+                  />
+                  <div>
+                    <h3>{item.name}</h3>
+                    <p>{item.price}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </PopoverContent>
+    </Popover>
   );
 }
