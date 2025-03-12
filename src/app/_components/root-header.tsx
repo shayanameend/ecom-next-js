@@ -34,7 +34,7 @@ export function RootHeader() {
         alt={assets.pictures.app.logo.alt}
         height={48}
         sizes="(max-width: 640px) 120px, (max-width: 1024px) 150px, 180px"
-        className={cn("h-12 w-auto object-cover")}
+        className={cn("h-12 md:h-16 w-auto object-cover")}
       />
       <div className={cn("flex flex-row items-center gap-4")}>
         <Popover>
