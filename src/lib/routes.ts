@@ -1,92 +1,125 @@
 const api = {
   auth: {
     signUp: {
-      url: () => "/auth/sign-up",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-up`,
     },
     signIn: {
-      url: () => "/auth/sign-in",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
     },
     forgotPassword: {
-      url: () => "/auth/forgot-password",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
     },
     resendOtp: {
-      url: () => "/auth/resend-otp",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/auth/resend-otp`,
     },
     verifyOtp: {
-      url: () => "/auth/verify-otp",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`,
     },
     updatePassword: {
-      url: () => "/auth/update-password",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/auth/update-password`,
     },
     refresh: {
-      url: () => "/auth/refresh",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
     },
   },
   public: {
     categories: {
-      url: () => "/categories",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/categories`,
     },
     vendors: {
-      url: (id?: string) => (id ? "/vendors" : `/vendors/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/vendors/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/vendors`,
     },
     products: {
-      url: (id?: string) => (id ? "/products" : `/products/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/products`,
     },
     reviews: {
-      url: (productId: string) => `/reviews/${productId}`,
+      url: (productId: string) =>
+        `${process.env.NEXT_PUBLIC_API_URL}/reviews/${productId}`,
     },
     profile: {
-      url: () => "/profile",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/profile`,
     },
   },
   admin: {
     profile: {
-      url: () => "/admin/profile",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/admin/profile`,
     },
     users: {
-      url: (id?: string) => (id ? "/admin/users" : `/admin/users/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/admin/users/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/admin/users`,
     },
     vendors: {
-      url: (id?: string) => (id ? "/admin/vendors" : `/admin/vendors/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/admin/vendors/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/admin/vendors`,
     },
     categories: {
       url: (id?: string) =>
-        id ? "/admin/categories" : `/admin/categories/${id}`,
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/admin/categories/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/admin/categories`,
     },
     products: {
-      url: (id?: string) => (id ? "/admin/products" : `/admin/products/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/admin/products/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/admin/products`,
     },
     orders: {
-      url: (id?: string) => (id ? "/admin/orders" : `/admin/orders/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/admin/orders/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/admin/orders`,
     },
   },
   vendor: {
     profile: {
-      url: () => "/vendor/profile",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/vendor/profile`,
     },
     users: {
-      url: (id?: string) => (id ? "/vendor/users" : `/vendor/users/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/vendor/users/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/vendor/users`,
     },
     categories: {
-      url: () => "/vendor/categories",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/vendor/categories`,
     },
     products: {
       url: (id?: string) =>
-        id ? "/vendor/products" : `/vendor/products/${id}`,
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/vendor/products/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/vendor/products`,
     },
     orders: {
-      url: (id?: string) => (id ? "/vendor/orders" : `/vendor/orders/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/vendor/orders/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/vendor/orders`,
     },
   },
   user: {
     profile: {
-      url: () => "/user/profile",
+      url: () => `${process.env.NEXT_PUBLIC_API_URL}/user/profile`,
     },
     orders: {
-      url: (id?: string) => (id ? "/user/orders" : `/user/orders/${id}`),
+      url: (id?: string) =>
+        id
+          ? `${process.env.NEXT_PUBLIC_API_URL}/user/orders/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/user/orders`,
     },
     reviews: {
-      url: (orderId: string) => `/user/reviews/${orderId}`,
+      url: (orderId: string) =>
+        `${process.env.NEXT_PUBLIC_API_URL}/user/reviews/${orderId}`,
     },
   },
 };
